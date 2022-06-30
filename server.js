@@ -22,26 +22,6 @@ app.get('/', (req, res) => {
   res.render('index')
 })
 
-const uploadMiddleware = async (req, res) => {
-  let loading = true
-  upload.single('file')
-  const fileData = {
-    path: req.file.path,
-    originalName: req.file.originalname,
-  }
-  if (req.body.password !== null && req.body.password !== '') {
-    fileData.password = await bcrypt.hash(req.body.password, 10)
-  }
-  const file = await File.create(fileData)
-  loading = false
-  res.render('index', {
-    fileLink: `${req.headers.origin}/file/${file.id}`,
-    fileName: file.originalName,
-    password: req.body.password,
-    loading: loading,
-  })
-}
-
 app.post('/upload', upload.single('file'), async (req, res) => {
   const fileData = {
     path: req.file.path,
