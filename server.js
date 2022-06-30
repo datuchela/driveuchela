@@ -6,6 +6,8 @@ const File = require('./models/File')
 const path = require('path')
 
 const express = require('express')
+const https = require('https')
+const fs = require('fs')
 const app = express()
 app.use(express.urlencoded({ extended: true }))
 
@@ -58,15 +60,19 @@ const handleDownload = async (req, res) => {
 
 app.route('/file/:id').get(handleDownload).post(handleDownload)
 
-const PORT = process.env.PORT || 5000
+const options = {
+  ca: [fs.readFileSync(PATH_TO_BUNDLE_CERT_1), fs.readFileSync(PATH_TO_BUNDLE_CERT_2)],
+  cert: fs.readFileSync(PATH_TO_CERT),
+  key: fs.readFileSync(PATH_TO_KEY),
+}
 
 const serverStart = async () => {
   try {
     await connectDB(process.env.MONGODB_URI)
     console.log('Connected to DB!')
-    app.listen(PORT, '0.0.0.0', () => {
-      console.log(`Server is up and running on port ${PORT}`)
-    })
+    const server = https.createServer(options, app)
+    const PORT = process.env.PORT || 5000
+    server.listen(PORT, '0.0.0.0', console.log(`Server is up and running on port ${PORT}`))
   } catch (err) {
     console.error(err)
   }
