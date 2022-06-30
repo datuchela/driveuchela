@@ -18,17 +18,6 @@ const connectDB = async (URI) => {
   return mongoose.connect(URI)
 }
 
-// set up plain http server
-var http = express()
-
-// set up a route to redirect http to https
-http.get('*', function (req, res) {
-  res.redirect('https://' + req.headers.host + req.url)
-})
-
-// have it listen on 8080
-http.listen(8080, console.log('http server is listening on 8080'))
-
 app.set('view engine', 'ejs')
 
 app.get('/', (req, res) => {
