@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File Hostuchela</title>
+  </head>
+  <body>
+    <main
+      style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 100vh"
+      class="flex items-center justify-center flex-col w-full h-[100vh]"
+    >
+      <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 2rem">
+        <% if (locals.fileLink != null) { %>
+        <div style="margin-bottom: 1rem">
+          <div style="color: green">Your file has been uploaded successfully!</div>
+          <div>
+            <span style="font-weight: 600">File name: </span>
+            <span><%= locals.fileName %></span>
+          </div>
+          <div>
+            <span style="font-weight: 600">File link: </span>
+            <a href="<%= locals.fileLink %>"><%= locals.fileLink %></a>
+            <button style="margin-left: 0.5rem" onclick="navigator.clipboard.writeText('<%= locals.fileLink %>')">Copy</button>
+          </div>
+          <% if (locals.password !== '') { %>
+          <div>
+            <span style="font-weight: 600">File password: </span>
+            <span><%= locals.password %></span>
+            <button style="margin-left: 0.5rem" onclick="navigator.clipboard.writeText('<%= locals.password %>')">Copy</button>
+          </div>
+          <% } %>
+        </div>
+        <% } %>
+        <form
+          style="display: flex; align-items: flex-start; justify-content: center; flex-direction: column; gap: 0.5rem"
+          action="/upload"
+          method="post"
+          enctype="multipart/form-data"
+        >
+          <div>
+            <label style="cursor: pointer" for="file">Choose File: </label>
+            <input style="cursor: pointer" type="file" name="file" id="file" required />
+          </div>
+          <div>
+            <label for="password">Password for this file (optional): </label>
+            <input type="password" name="password" id="password" />
+          </div>
+          <button style="margin-top: 0.5rem; height: 2rem; width: 100%; cursor: pointer" type="submit">Upload</button>
+        </form>
+      </div>
+    </main>
+  </body>
+</html>
