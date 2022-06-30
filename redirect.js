@@ -4,6 +4,7 @@ const app = express()
 
 // set up a route to redirect http to https
 app.get('*', function (req, res) {
+  console.log('someone hit http server')
   res.redirect('https://' + req.headers.host + req.url)
 })
 
