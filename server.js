@@ -61,9 +61,8 @@ const handleDownload = async (req, res) => {
 app.route('/file/:id').get(handleDownload).post(handleDownload)
 
 const options = {
-  ca: [fs.readFileSync(PATH_TO_BUNDLE_CERT_1), fs.readFileSync(PATH_TO_BUNDLE_CERT_2)],
-  cert: fs.readFileSync(PATH_TO_CERT),
-  key: fs.readFileSync(PATH_TO_KEY),
+  cert: fs.readFileSync('./fullchain.pem'),
+  key: fs.readFileSync('./privkey.pem'),
 }
 
 const serverStart = async () => {
