@@ -27,7 +27,7 @@ http.get('*', function (req, res) {
 })
 
 // have it listen on 8080
-http.listen(8080)
+http.listen(8080, console.log('http server is listening on 8080'))
 
 app.set('view engine', 'ejs')
 
