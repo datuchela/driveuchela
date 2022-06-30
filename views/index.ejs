@@ -22,7 +22,7 @@
           <div>
             <span style="font-weight: 600">File link: </span>
             <a href="<%= locals.fileLink %>"><%= locals.fileLink %></a>
-            <button style="margin-left: 0.5rem" onclick="navigator.clipboard.writeText('hello')">Copy</button>
+            <button id="copy-link" style="margin-left: 0.5rem">Copy</button>
           </div>
           <% if (locals.password !== '') { %>
           <div>
@@ -51,5 +51,11 @@
         </form>
       </div>
     </main>
+    <script>
+      const copyLink = document.getElementById('copy-link')
+      copyLink.addEventListener('click', () => {
+        navigator.clipboard.writeText(locals.fileLink)
+      })
+    </script>
   </body>
 </html>
