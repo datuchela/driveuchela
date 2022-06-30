@@ -20,6 +20,11 @@ const connectDB = async (URI) => {
 
 app.set('view engine', 'ejs')
 
+app.enable('trust proxy')
+app.use((req, res, next) => {
+  req.secure ? next() : res.redirect('https://' + req.headers.host + req.url)
+})
+
 app.get('/', (req, res) => {
   res.render('index')
 })
